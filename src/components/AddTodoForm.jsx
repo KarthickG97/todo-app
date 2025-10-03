@@ -20,7 +20,7 @@ const AddTodoForm = ({ addTodo }) => {
         darkMode ? "bg-gray-800" : "bg-gray-200"
       }`}
     >
-      {/* Task Input */}
+      {/*---------- Task Input--------------- */}
       <input
         {...register("text", { required: true })}
         type="text"
@@ -32,7 +32,7 @@ const AddTodoForm = ({ addTodo }) => {
         }`}
       />
 
-      {/* Category, Due Date, Button */}
+      {/*------------- Category, Due Date, Button----------- */}
       <div className="flex flex-col sm:flex-row gap-2">
         <select
           {...register("category")}
@@ -49,7 +49,8 @@ const AddTodoForm = ({ addTodo }) => {
         <input
           {...register("dueDate")}
           type="date"
-          className={`flex-1 p-2 rounded ${
+          className={`flex-1 p-2 rounded 
+          ${
             darkMode ? "bg-gray-700 text-white" : "bg-white text-black"
           }`}
         />
