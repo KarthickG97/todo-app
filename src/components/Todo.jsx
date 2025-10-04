@@ -4,6 +4,7 @@ import Todoitems from "./Todoitems";
 import { ThemeContext } from "../context/ThemeContext";
 import useTodos from "../hooks/useTodos";
 import todo_icon from "../assets/todo_icon.png";
+import dark_mode_icon from "../assets/dark_mode_icon.png"; // 🌙 single theme icon
 
 const Todo = () => {
   const { darkMode, toggleTheme } = useContext(ThemeContext);
@@ -21,7 +22,6 @@ const Todo = () => {
     addTodo,
     deleteTodo,
     toggleTodo,
-    editTodo, 
   } = useTodos(categoryFilter, dueDateFilter);
 
   // Keyboard shortcut: Ctrl + D to toggle theme
@@ -38,8 +38,12 @@ const Todo = () => {
 
   return (
     <div
-      className={`place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl
-        ${darkMode ? "bg-gray-900 text-white border border-gray-700" : "bg-white text-black border border-gray-300"}`}
+      className={`place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl transition-all duration-300
+        ${
+          darkMode
+            ? "bg-gray-900 text-white border border-gray-700"
+            : "bg-white text-black border border-gray-300"
+        }`}
     >
       {/*------------ Header------------------- */}
       <div className="flex items-center justify-between mt-0 gap-2">
@@ -47,13 +51,19 @@ const Todo = () => {
           <img className="w-8" src={todo_icon} alt="todo icon" />
           <h1 className="text-3xl font-semibold">To-Do List</h1>
         </div>
-        {/*--------------------- Dark mode toggle button------------------ */}
-        <button
+
+        {/*--------  Dark mode toggle icon---------------- */}
+        <img
+          src={dark_mode_icon}
+          alt="toggle theme"
           onClick={toggleTheme}
-          className={`px-3 py-1 rounded ${darkMode ? "bg-gray-700 text-white" : "bg-gray-300 text-black"}`}
-        >
-          {darkMode ? "Light" : "Dark"}
-        </button>
+          className={`w-10 h-10 cursor-pointer transition-all duration-300 hover:scale-110 
+            ${
+              darkMode
+                ? "drop-shadow-[0_0_6px_#facc15]" 
+                : "opacity-70 hover:opacity-100"
+            }`}
+        />
       </div>
 
       {/*-------------------- Search----------------- */}
@@ -121,29 +131,32 @@ const Todo = () => {
         ))}
       </div>
 
-      
       {/*-------- Todo List - scroll option-------- */}
-  <div className="flex-1 overflow-y-auto max-h-[220px]">
-    {filteredTodos.length > 0 ? (
-      filteredTodos.map((item) => (
-        <Todoitems
-          key={item.id}
-          {...item}
-          deleteTodo={deleteTodo}
-          toggle={toggleTodo}
-          darkMode={darkMode}
-        />
-      ))
-    ) : (
-      <p className="text-center text-gray-500 mt-2">No tasks found.</p>
-    )}
-  </div>
-
+      <div className="flex-1 overflow-y-auto max-h-[220px]">
+        {filteredTodos.length > 0 ? (
+          filteredTodos.map((item) => (
+            <Todoitems
+              key={item.id}
+              {...item}
+              deleteTodo={deleteTodo}
+              toggle={toggleTodo}
+              darkMode={darkMode}
+            />
+          ))
+        ) : (
+          <p className="text-center text-gray-500 mt-2">No tasks found.</p>
+        )}
+      </div>
 
       {/*------ Footer -------------- */}
       <div className="mt-5 text-center text-sm text-gray-400">
         Developed by Karthick G |{" "}
-        <a href="https://github.com/KarthickG97" className="underline">
+        <a
+          href="https://github.com/KarthickG97"
+          className="underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           GitHub
         </a>
       </div>
